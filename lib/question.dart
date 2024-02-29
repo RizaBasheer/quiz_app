@@ -27,11 +27,23 @@ class _QuestionsState extends State<Questions> {
     Quiz(qstn: ' Bats are blind.', ans: false),
   ];
   int index = 0;
+  int score = 0;
+  String result = '';
   void nextQ() {
     if (index < Questionset.length) {
       index++;
     }
-    setState ((){});
+    setState(() {});
+  }
+
+  void check(bool answer) {
+    // print(answer);
+    if (answer == Questionset[index].ans) {
+      result = 'Correct answer';
+      score++;
+    } else {
+      result = 'Wrong answer';
+    }
   }
 
   @override
@@ -48,9 +60,11 @@ class _QuestionsState extends State<Questions> {
                     fontSize: 30,
                     fontWeight: FontWeight.bold,
                   )),
+              Text('Your score:$score',style: TextStyle(color: Colors.white70),),
               SizedBox(height: 60),
               TextButton(
                   onPressed: () {
+                    check(true);
                     nextQ();
                   },
                   style: (TextButton.styleFrom(
@@ -66,6 +80,7 @@ class _QuestionsState extends State<Questions> {
               ),
               TextButton(
                 onPressed: () {
+                  check(false);
                   nextQ();
                 },
                 style: TextButton.styleFrom(
@@ -78,6 +93,14 @@ class _QuestionsState extends State<Questions> {
                     color: Colors.white,
                   ),
                 ),
+              ),
+              SizedBox(
+                height: 30,
+                width: 50,
+              ),
+              Text(
+                result,
+                style: TextStyle(color: Colors.white),
               ),
             ],
           ),
